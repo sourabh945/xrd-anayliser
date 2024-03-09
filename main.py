@@ -12,7 +12,7 @@ def open_file(filepath,type="csv",separator=";") -> None:
         return data
     else:
         base_name , _  = os.path.splitext(filepath)
-        shutil.copy2(filepath,f'{base_name}+.csv')
+        shutil.copy2(filepath,f'{base_name}.csv')
         with open(filepath,'r') as file:
             data = pd.read_csv(file,sep=separator,header=None)
             file.close()
