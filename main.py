@@ -4,6 +4,7 @@ import numpy as np
 import shutil
 import matplotlib.pyplot as plt  
 import csv
+from scipy.signal import find_peaks,find_peaks_cwt
 
 def open_file(filepath,type="csv",separator=";") -> None:
     try:
@@ -25,7 +26,6 @@ def open_file(filepath,type="csv",separator=";") -> None:
 
 class plot:  
     def __init__(self,x,y) -> None:
-        
         self.plot_object = plt
         self.x = x
         self.y = y
@@ -75,8 +75,33 @@ class xrd_data:
     def maxima(self) -> float:
         return self.angle[np.argmax(self.intensity)] , self.intensity[np.argmax(self.intensity)]
     
-    def all_peak(self) -> list:
+    def all_peak(self,baseline:float,width:float) -> list:
+        result_ = []
+        last_value_ = 0
+        slope = True
+        for i in range(0,len(self.angle)):
+            if self.intensity[i] > baseline:
+                if self.intensity[i] < last_value_ and slope:
+                    result_.append((self.angle[i],self.intensity[i]))
+                    slope = False
+                elif self.intensity[i] > last_value_:
+                    slope = True
+                last_value_ = self.intensity[i]
+            else:
+                pass
+        result__ = [result_[0]]
+        checked = set()
+        for i in range(1,len(result_)):
+            if result_[i][0] - result__[-1][0] < width:
+                if result_[i][1] > result__[-1][1]:
+                    result__[-1] = result_[i]
+            else:
+                result__.append(result_[i])
+        return result__
+    
+    def fit_peak(self,range):
         pass
+    
 
 
 if __name__ == "__main__":
@@ -84,7 +109,8 @@ if __name__ == "__main__":
     angle = np.array(loaded[0])
     intensity = np.array(loaded[1])
     
-    # data = xrd_data(angle,intensity)
+    data = xrd_data(angle,intensity)
+    print(data.all_peak(1000,0.5))
     # print(data.maxima())
     # c ,d = data.peak_separator([10,15])
     # a = plot(angle,intensity)

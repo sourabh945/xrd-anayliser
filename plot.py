@@ -1,23 +1,21 @@
 from matplotlib import pyplot as plt
-from sys import argv
+import pandas as pd
 
 import json
 
-def graph(x,y,xlabel,ylabel):
+def graph(x,y,xlabel="x",ylabel="y"):
     plt.xlabel(xlabel=xlabel)
     plt.ylabel(ylabel=ylabel)
     plt.plot(x,y)
     plt.show()
 
-filename=argv[1]
-
-with open("./.temp/{filename}.json") as file:
-    data = list(json.load(file))
+with open("data.csv",'r') as file:
+    data = pd.read_csv(file,sep="\t",header=None)
     file.close()
 
-graph(data[0],data[1],argv[2],argv[3])
+graph(data[0],data[1])
 
-class ProcessPlotter:
+# class ProcessPlotter:
 #     def __init__(self) -> None:
 #         self.x = []
 #         self.y = []
