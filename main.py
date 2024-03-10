@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import numpy as np
 import shutil
-
+import matplotlib.pyplot as plt  
 import csv
 
 def open_file(filepath,type="csv",separator=";") -> None:
@@ -22,9 +22,10 @@ def open_file(filepath,type="csv",separator=";") -> None:
     except Exception as error:
         print(error)
 
+
 class plot:  
     def __init__(self,x,y) -> None:
-        import matplotlib.pyplot as plt  
+        
         self.plot_object = plt
         self.x = x
         self.y = y
@@ -60,21 +61,38 @@ class xrd_data:
     def __init__(self,angle,intensity) -> None:
         self.angle = angle
         self.intensity = intensity
+
     def peak_separator(self,range) -> list:
-        left_index = np.searchsorted(self.x,range[0],side='left')
-        right_index = np.searchsorted(self.x,range[1],side='right')
-        data = []
-        temp 
-        return 
+        left_index = np.searchsorted(self.angle,range[0],side='left')
+        right_index = np.searchsorted(self.angle,range[1],side='right')
+        return self.angle[left_index:right_index] , self.intensity[left_index:right_index]
     
+    def local_maxima(self,range) -> float:
+        x,y = self.peak_separator(range)
+        max_index = np.argmax(y)
+        return x[max_index],y[max_index]
+    
+    def maxima(self) -> float:
+        return self.angle[np.argmax(self.intensity)] , self.intensity[np.argmax(self.intensity)]
+    
+    def all_peak(self) -> list:
+        
 
-angle = np.array(open_file("data.csv",separator="\t")[0])
-intensity = np.array(open_file("data.csv",separator="\t")[1])
 
-a = plot(angle,intensity)
-# a.show()
-print(np.searchsorted(angle,10))
-b = plot([0,1,2,3],[0,2,4,6])
-# b.show()
+if __name__ == "__main__":
+    loaded = open_file("data.csv",separator='\t')
+    angle = np.array(loaded[0])
+    intensity = np.array(loaded[1])
+    
+    # data = xrd_data(angle,intensity)
+    # print(data.maxima())
+    # c ,d = data.peak_separator([10,15])
+    # a = plot(angle,intensity)
+    # a.show()
+    
+    # print(np.searchsorted(angle,10))
+
+    
+    
 
 # a.show()
