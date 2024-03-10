@@ -76,7 +76,7 @@ class xrd_data:
         return self.angle[np.argmax(self.intensity)] , self.intensity[np.argmax(self.intensity)]
     
     def all_peak(self) -> list:
-        
+        pass
 
 
 if __name__ == "__main__":
