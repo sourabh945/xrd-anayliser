@@ -9,7 +9,7 @@ def graph(x,y,xlabel="x",ylabel="y"):
     plt.plot(x,y)
     plt.show()
 
-with open("data.csv",'r') as file:
+with open("ABCD.csv",'r') as file:
     data = pd.read_csv(file,sep="\t",header=None)
     file.close()
 
