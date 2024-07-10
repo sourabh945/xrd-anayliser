@@ -177,7 +177,7 @@ class xrd_data:
 
 
 if __name__ == "__main__":
-    loaded = open_file("ABCD.csv",separator='\t')
+    loaded = open_file("filepath",separator='\t')
     angle = np.array(loaded[0])
     intensity = np.array(loaded[1])
     
@@ -188,28 +188,3 @@ if __name__ == "__main__":
     
     plot1 = plot(peaks[0][0],peaks[0][1])
     plot1.show()
-
-
-    # print(data.all_peak(500,0.3))
-    # list = [[21,23],[30,33],[38,39.5],[44.4,45],[45,46],[50.5,51.2],[55,57],[65,66.4],[74,74.5],[74.5,75.5],[79,79.5]]
-    # print(data.crystal_size_of_single_peak(list))
-
-    # while(True):
-    #     exec(input(">>\t"))
-
-    # plot1 = plot(angle,intensity)
-    # fit_x,fit_y = data.single_fit_peak([28.5,29.16])
-    # plot1.plot_with_fit(fit_x,fit_y)
-    # print(data.all_peak(1000,0.5))
-    # print(data.fit_peak([30,32]))
-    # print(data.maxima())
-    # c ,d = data.peak_separator([10,15])
-    # a = plot(angle,intensity)
-    # a.show()
-    
-    # print(np.searchsorted(angle,10))
-
-    
-    
-
-# a.show()
